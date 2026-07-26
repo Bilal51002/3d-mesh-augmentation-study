@@ -1,0 +1,3 @@
+[submodule "models/dgnet"]
+	path = models/dgnet
+	url = https://github.com/li-xl/DGNet.git
