@@ -20,4 +20,3 @@ toilet (444).
 Structure de dossiers d'origine (classe/train|test/) conservée à l'identique.
 Dataset converti sauvegardé sur Kaggle Datasets : modelnet10-obj-halfedgecnn
 
-
