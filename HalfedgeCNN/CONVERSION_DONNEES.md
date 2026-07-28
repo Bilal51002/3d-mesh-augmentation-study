@@ -20,8 +20,4 @@ toilet (444).
 Structure de dossiers d'origine (classe/train|test/) conservée à l'identique.
 Dataset converti sauvegardé sur Kaggle Datasets : modelnet10-obj-halfedgecnn
 
-## Statut SHREC16
-Non converti à ce stade — le format .npz fourni (clés: path_index, vertices,
-Normal, angles) ne contient pas de tableau de faces (connectivité du mesh),
-rendant la reconstruction d'un .obj valide impossible sans information
-supplémentaire. Question posée à l'encadrant, en attente de réponse.
+
