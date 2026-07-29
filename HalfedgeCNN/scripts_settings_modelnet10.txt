@@ -1,0 +1,7 @@
+--dataset_mode classification
+--dataroot datasets/modelnet10
+--name modelnet10
+--pool_res 4000 3000 2000 1200
+--number_input_faces 5000
+--seed 42
+--gpu_ids 0
