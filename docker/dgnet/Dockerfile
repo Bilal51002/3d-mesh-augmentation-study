@@ -10,8 +10,10 @@ RUN apt-get update \
         build-essential \
         git \
         libomp-dev \
+        libgl1 \
+        libegl1 \
+        libgomp1 \
     && rm -rf /var/lib/apt/lists/*
-
 # Copier les dépendances officielles de DGNet
 COPY models/dgnet/requirements.txt /tmp/dgnet-requirements.txt
 
@@ -34,7 +36,8 @@ RUN sed '/^[[:space:]]*jittor[[:space:]]*$/Id' \
         "scikit-learn<1.1" \
         "matplotlib<3.6" \
         "psutil<6" \
-        "tensorboardX==2.5.1"
+        "tensorboardX==2.5.1" \
+        "open3d==0.17.0"
 
 # Rendre le dépôt officiel DGNet importable
 ENV PYTHONPATH=/workspace/dgnet
