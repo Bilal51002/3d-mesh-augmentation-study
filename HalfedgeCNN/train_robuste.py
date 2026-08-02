@@ -1,4 +1,6 @@
+import os
 import time
+from os.path import join
 from options.train_options import TrainOptions
 from data import DataLoader
 from models import create_model
@@ -67,6 +69,13 @@ if __name__ == "__main__":
     writer.log_headline()
 
     best_accuracy = 0.0
+    if opt.continue_train:
+        import json
+        chemin_best_acc = join(opt.checkpoints_dir, opt.name, "best_accuracy.json")
+        if os.path.exists(chemin_best_acc):
+            with open(chemin_best_acc) as f_acc:
+                best_accuracy = json.load(f_acc)["best_accuracy"]
+            print(f"Reprise : meilleure accuracy connue = {best_accuracy*100:.2f}%")
     num_epochs = opt.niter + opt.niter_decay
     for epoch in range(opt.epoch_count, num_epochs + 1):
         start_time = time.time()
@@ -82,6 +91,10 @@ if __name__ == "__main__":
                 best_model_saved = True
                 model.save_network("best")
                 best_accuracy = test_accuracy
+                import json
+                from os.path import join
+                with open(join(opt.checkpoints_dir, opt.name, "best_accuracy.json"), "w") as f_acc:
+                    json.dump({"best_accuracy": best_accuracy, "epoch": epoch}, f_acc)
 
             total_time = time.time() - start_time
             log_epoch_data()

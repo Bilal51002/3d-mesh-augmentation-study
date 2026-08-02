@@ -1,0 +1,12 @@
+{
+  "checkpoint": "best_net.pth (epoch 50, corrige)",
+  "accuracy": 0.31443298969072164,
+  "precision_macro": 0.3233593399887026,
+  "recall_macro": 0.2918268284841884,
+  "f1_macro": 0.27706764016035634,
+  "temps_inference_moyen_ms": 65.06357887356552,
+  "temps_inference_total_s": 50.48933720588684,
+  "memoire_gpu_pic_mo": 561.89599609375,
+  "nb_echantillons": 776,
+  "nb_parametres": 1578966
+}
