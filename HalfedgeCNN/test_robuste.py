@@ -1,4 +1,5 @@
 import os
+import torch
 
 from options.test_options import TestOptions
 from data import DataLoader
@@ -15,7 +16,7 @@ def run_test_or_val(phase):
     opt.number_augmentations = 1
 
     if opt.phase == "val" and opt.dataset_mode == "segmentation" and not os.path.isdir("datasets/human_seg/val"):
-        return "No Data"
+        return "No Data", 0.0
 
     dataset = DataLoader(opt)
     model = create_model(opt)
@@ -25,10 +26,20 @@ def run_test_or_val(phase):
 
     nb_ok = 0
     nb_ignores = 0
+    total_loss = 0.0
+    nb_batchs_avec_loss = 0
+
     for i, data in enumerate(dataset):
         try:
             model.set_input(data)
-            ncorrect, nexamples = model.test()
+            with torch.no_grad():
+                out = model.forward()
+                loss = model.criterion(out, model.labels)
+                total_loss += loss.item()
+                nb_batchs_avec_loss += 1
+                predictions = out.data.max(1)[1]
+                ncorrect = model.get_accuracy(predictions=predictions, labels=model.labels)
+                nexamples = len(model.labels)
             writer.update_counter(ncorrect, nexamples)
             nb_ok += 1
         except Exception as e:
@@ -37,16 +48,17 @@ def run_test_or_val(phase):
                 f.write(f"Phase {phase}, batch {i}: {e}\n")
             continue
 
-    print(f"  [Test/{phase}] Batchs OK: {nb_ok} | Batchs ignores: {nb_ignores}")
-    return writer.acc
+    avg_loss = total_loss / nb_batchs_avec_loss if nb_batchs_avec_loss > 0 else 0.0
+    print(f"  [Test/{phase}] Batchs OK: {nb_ok} | Batchs ignores: {nb_ignores} | Test Loss: {avg_loss:.5f}")
+    return writer.acc, avg_loss
 
 
 def run_test():
-    accuracy = run_test_or_val("test")
-    return accuracy
+    accuracy, avg_loss = run_test_or_val("test")
+    return accuracy, avg_loss
 
 
 if __name__ == "__main__":
     print("Running Test")
-    accuracy = run_test()
-    print("Test accuracy: {:.5} %".format(accuracy * 100))
+    accuracy, avg_loss = run_test()
+    print("Test accuracy: {:.5} % | Test loss: {:.5f}".format(accuracy * 100, avg_loss))
