@@ -16,8 +16,7 @@ Aucun tableau de faces (connectivité des triangles) n'est présent.
 
 ## Tests effectués
 
-### Test 1 — Cohérence sur 10 fichiers différents (T306, T455, T564, T388,
-T300, T575, T429, T515, T336, T577)
+### Test 1 — Cohérence sur 10 fichiers différents (T306, T455, T564, T388,T300, T575, T429, T515, T336, T577)
 Résultat : les 10 fichiers ont exactement la même forme :
 - vertices.shape = (252, 3) — identique pour tous les fichiers testés
 - path_index.shape = (253,)
