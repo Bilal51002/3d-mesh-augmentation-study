@@ -50,8 +50,6 @@ connectivité par faces, condition indispensable pour reconstruire un fichier
 ## Statut
 Reconstruction d'un .obj impossible à partir des données telles que fournies,
 sans risque de fausser la topologie réelle du mesh d'origine.
-Question transmise à l'encadrant : existence d'une version brute du dataset
-(sommets + faces) pour SHREC16.
 
 ## Repo de référence
 HalfedgeCNN — https://github.com/IngmarLudwig/HalfedgeCNN
